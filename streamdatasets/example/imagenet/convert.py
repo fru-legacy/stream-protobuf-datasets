@@ -8,7 +8,7 @@ train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, 
 
 values = {'difficult': [], 'truncated': [], 'database': [], 'depth': [], 'segmented': [], 'pose': []}
 step = 1
-for train_folder in train_folders:
+for train_folder in train_folders[0:50]:
   print(step)
   step += 1
   files = [f for f in listdir(train_folder) if isfile(join(train_folder, f))]
