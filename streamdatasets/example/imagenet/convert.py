@@ -17,5 +17,6 @@ for train_folder in train_folders[0:1]:
     b_folder = ''.join(child for child in BsData.find_all('difficult')[0].children)
     if b_folder not in values['difficult']:
       values['difficult'].append(b_folder)
-    print(b_folder)
+    #print(b_folder)
 
+print(values)
