@@ -8,14 +8,13 @@ train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, 
 
 values = {'difficult': [], 'truncated': [], 'database': [], 'depth': [], 'segmented': [], 'pose': []}
 
-for train_folder in train_folders[0:1]:
+for train_folder in train_folders:
   files = [f for f in listdir(train_folder) if isfile(join(train_folder, f))]
   for file in files:
     with open(join(train_folder, file), 'r') as f:
       data = f.read()
     BsData = BeautifulSoup(data, "xml")
     def add_value(name):
-      print(name)
       b_value = ''.join(child for child in BsData.find_all(name)[0].children)
       if b_value not in values[name]:
         values[name].append(b_value)
