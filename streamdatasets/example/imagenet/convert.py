@@ -37,6 +37,6 @@ for train_folder in train_folders[0:1]:
     restored = Imagenet().parse(ser)
     print(restored)
     with open(join(folder_data, model.folder, model.filename + '.JPEG'), 'rb') as f:
-      print(f.read())
+      print(type(f.read()))
 
 print(values)
