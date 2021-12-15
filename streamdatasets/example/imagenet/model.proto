@@ -6,20 +6,22 @@ syntax = "proto3";
 
 package model;
 
+// At the moment the fields that are not needed or constant are omitted 
+
 message Imagenet {
-  string folder = 1;
+  //string folder = 1;
   string filename = 2;
-  string source_db = 3;
+  //string source_db = 3;
 
   int32 size_width = 4;
   int32 size_height = 5;
-  int32 size_depth = 6;
-  int32 segmented = 7;
+  //int32 size_depth = 6;
+  //bool segmented = 7;
 
   string object_name = 8;
-  bool object_pose_unspecified = 9;
-  int32 object_truncated = 10;
-  int32 object_difficult = 11;
+  //bool object_pose_unspecified = 9;
+  //bool object_truncated = 10;
+  //bool object_difficult = 11;
   int32 object_bndbox_xmin = 12;
   int32 object_bndbox_ymin = 13;
   int32 object_bndbox_xmax = 14;
