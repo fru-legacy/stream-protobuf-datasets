@@ -1,9 +1,17 @@
 from os import listdir
 from os.path import isfile, isdir, join
+from bs4 import BeautifulSoup
 
 #data/ILSVRC/Annotations/CLS-LOC/train/n02606052/n02606052_188.xml
 folder = "/data/ILSVRC/Annotations/CLS-LOC/train"
-onlyfolder = [f for f in listdir(folder) if isdir(join(folder, f))]
+train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, f))]
 
-print('Test123', len(onlyfolder))
+for train_folder in train_folders[0:0]:
+  files = [f for f in listdir(train_folder) if isfile(join(train_folder, f))]
+  for file in files:
+    with open(join(train_folder, file), 'r') as f:
+      data = f.read()
+    BsData = BeautifulSoup(data, "xml")
+    b_folder = BsData.find_next('folder')
+    print(b_folder.contents)
 
