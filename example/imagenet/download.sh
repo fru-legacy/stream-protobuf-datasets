@@ -10,4 +10,5 @@ transmission-cli https://academictorrents.com/download/943977d8c96892d2423763833
 tar -xvzf ./Downloads/ILSVRC2017_CLS-LOC.tar.gz
 # Get progress with: ls ./Downloads/ILSVRC/Data/CLS-LOC/train/ | wc -l
 
-
+# Validate hash: 
+pv /data/ILSVRC2017_CLS-LOC2.tar.gz | sha1sum
