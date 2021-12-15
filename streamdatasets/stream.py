@@ -4,7 +4,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Type, TypeVar, Generic
 from importlib.machinery import SourceFileLoader
-from .container.data import StreamDatasetBucket
+from .container.data import StreamDatasetBucket, StreamDatasetFile, StreamDatasetMetadata
 from .container.list import StreamDatasetList
   
 # imports the module from the given path
@@ -16,6 +16,7 @@ class Parser(ABC):
         pass
 
 test = StreamDatasetBucket()
+test.files.append(StreamDatasetFile())
 print(test)
 
 #T = TypeVar('T')
