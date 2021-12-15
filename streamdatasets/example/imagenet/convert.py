@@ -15,7 +15,7 @@ for train_folder in train_folders:
       data = f.read()
     BsData = BeautifulSoup(data, "xml")
     def add_value(name):
-      print(join(train_folder, file), name)
+      #print(join(train_folder, file), name)
       b_value = ''.join(child for child in BsData.find_all(name)[0].children)
       if b_value not in values[name]:
         values[name].append(b_value)
@@ -23,7 +23,7 @@ for train_folder in train_folders:
     add_value('truncated')
     add_value('database')
     add_value('depth')
-    add_value('segmented')
+    #add_value('segmented') can sometimes be segment
     add_value('pose')
 
 print(values)
