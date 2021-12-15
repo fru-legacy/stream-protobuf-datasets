@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 folder = "/data/ILSVRC/Annotations/CLS-LOC/train"
 train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, f))]
 
-values = {'difficult': [], 'truncated': [], 'database': [], 'depth': [], 'segment': [], 'pose': []}
+values = {'difficult': [], 'truncated': [], 'database': [], 'depth': [], 'segmented': [], 'pose': []}
 
 for train_folder in train_folders[0:1]:
   files = [f for f in listdir(train_folder) if isfile(join(train_folder, f))]
@@ -23,7 +23,7 @@ for train_folder in train_folders[0:1]:
     add_value('truncated')
     add_value('database')
     add_value('depth')
-    add_value('segment')
+    add_value('segmented')
     add_value('pose')
 
 print(values)
