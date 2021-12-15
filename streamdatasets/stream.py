@@ -6,6 +6,7 @@ from typing import Dict, Type, TypeVar, Generic
 from importlib.machinery import SourceFileLoader
 from .container.data import StreamDatasetBucket, StreamDatasetFile, StreamDatasetMetadata
 from .container.list import StreamDatasetList
+import requests
   
 # imports the module from the given path
 
@@ -15,9 +16,11 @@ class Parser(ABC):
     def extract(self, bytes) -> Dict:
         pass
 
-test = StreamDatasetBucket()
-test.files.append(StreamDatasetFile())
-print(test)
+#test = StreamDatasetBucket()
+#test.files.append(StreamDatasetFile())
+#print(test)
+
+#r=requests.get("http://www.example.com/", headers={"content-type":"text"})
 
 #T = TypeVar('T')
 #class Bucket(Generic[T], StreamDatasetBucket):
@@ -35,10 +38,13 @@ class Stream:
         }
         self.cache = cache
         # https://www.geeksforgeeks.org/how-to-import-a-python-module-given-the-full-path/
-        self.parser = SourceFileLoader("gfg","articles/gfg.py").load_module()
+        #self.parser = SourceFileLoader("gfg","articles/gfg.py").load_module()
 
-    def __download(file, part_count=None, part_start=None, part_end=None):
-        return b'Hello world'
+    def _download(self, url, cache_name, part_start=None, part_end=None):
+        headers = {'Range': f"bytes={part_start}-{part_end}"}
+        print(headers)
+        return requests.get(url, headers=headers)
+        #return b'Hello world'
 
     def _download_data_use_cache(self, name, bucket):
         return b'Hello world'
