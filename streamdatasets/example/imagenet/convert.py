@@ -19,7 +19,7 @@ for train_folder in train_folders[0:1]:
     BsData = BeautifulSoup(data, "xml")
     def get_value(name):
       return ''.join(child for child in BsData.find_all(name)[0].children)
-    model = Imagenet.from_dict({
+    model = Imagenet().from_dict({
       'filename': get_value('filename'),
       'size_width': get_value('width'),
       'size_height': get_value('height'),
