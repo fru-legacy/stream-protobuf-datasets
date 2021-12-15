@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 folder = "/data/ILSVRC/Annotations/CLS-LOC/train"
 train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, f))]
 
-values = {'difficult': []}
+values = {'difficult': [], 'truncated': [], 'database': [], 'depth': [], 'segment': [], 'pose': []}
 
 for train_folder in train_folders[0:1]:
   files = [f for f in listdir(train_folder) if isfile(join(train_folder, f))]
@@ -14,9 +14,15 @@ for train_folder in train_folders[0:1]:
     with open(join(train_folder, file), 'r') as f:
       data = f.read()
     BsData = BeautifulSoup(data, "xml")
-    b_folder = ''.join(child for child in BsData.find_all('difficult')[0].children)
-    if b_folder not in values['difficult']:
-      values['difficult'].append(b_folder)
-    #print(b_folder)
+    def add_value(name):
+      b_value = ''.join(child for child in BsData.find_all(name)[0].children)
+      if b_value not in values[name]:
+        values[name].append(b_value)
+    add_value('difficult')
+    add_value('truncated')
+    add_value('database')
+    add_value('depth')
+    add_value('segment')
+    add_value('pose')
 
 print(values)
