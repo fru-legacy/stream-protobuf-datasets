@@ -7,8 +7,10 @@ folder = "/data/ILSVRC/Annotations/CLS-LOC/train"
 train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, f))]
 
 values = {'difficult': [], 'truncated': [], 'database': [], 'depth': [], 'segmented': [], 'pose': []}
-
+step = 1
 for train_folder in train_folders:
+  print(step)
+  step += 1
   files = [f for f in listdir(train_folder) if isfile(join(train_folder, f))]
   for file in files:
     with open(join(train_folder, file), 'r') as f:
