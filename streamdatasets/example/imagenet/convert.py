@@ -13,5 +13,5 @@ for train_folder in train_folders[0:1]:
       data = f.read()
     BsData = BeautifulSoup(data, "xml")
     b_folder = BsData.find_all('folder')[0]
-    print(b_folder.contents)
+    print(b_folder.body)
 
