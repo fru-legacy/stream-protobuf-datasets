@@ -21,13 +21,13 @@ for train_folder in train_folders[0:1]:
       return ''.join(child for child in BsData.find_all(name)[0].children)
     model = Imagenet().from_dict({
       'filename': get_value('filename'),
-      'size_width': get_value('width'),
-      'size_height': get_value('height'),
+      'size_width': int(get_value('width')),
+      'size_height': int(get_value('height')),
       'object_name': get_value('name'),
-      'object_bndbox_xmin': get_value('xmin'),
-      'object_bndbox_ymin': get_value('ymin'),
-      'object_bndbox_xmax': get_value('xmax'),
-      'object_bndbox_ymax': get_value('ymax')
+      'object_bndbox_xmin': int(get_value('xmin')),
+      'object_bndbox_ymin': int(get_value('ymin')),
+      'object_bndbox_xmax': int(get_value('xmax')),
+      'object_bndbox_ymax': int(get_value('ymax'))
     })
     ser = bytes(model)
     print(ser)
