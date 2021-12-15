@@ -1,0 +1,14 @@
+// protoc -I ./container --python_betterproto_out=. list.proto
+
+syntax = "proto3";
+package streamdatasets.list;
+
+message StreamDatasetBucket {
+  int64 start_byte = 1;
+  int64 end_byte = 2;
+}
+
+message StreamDatasetList {
+  string name = 1;
+  repeated StreamDatasetBucket buckets = 2;
+}

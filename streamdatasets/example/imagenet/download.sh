@@ -12,3 +12,8 @@ tar -xvzf ./Downloads/ILSVRC2017_CLS-LOC.tar.gz
 
 # Validate hash: 
 pv /data/ILSVRC2017_CLS-LOC2.tar.gz | sha1sum
+
+pip3 install git+https://github.com/fru/stream-protobuf-datasets
+python3 ./convert.py
+
+# Upload to webserver e.g: gdrive and rclone serve

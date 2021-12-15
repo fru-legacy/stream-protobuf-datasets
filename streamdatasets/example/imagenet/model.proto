@@ -1,0 +1,27 @@
+// sudo apt install protobuf-compiler
+// pip install "betterproto[compiler]"
+// protoc -I ./streamdatasets/example/imagenet --python_betterproto_out=./streamdatasets/example/imagenet model.proto
+
+syntax = "proto3";
+
+package model;
+
+message Imagenet {
+  string folder = 1;
+  string filename = 2;
+  string source_db = 3;
+
+  int32 size_width = 4;
+  int32 size_height = 5;
+  int32 size_depth = 6;
+  int32 segmented = 7;
+
+  string object_name = 8;
+  bool object_pose_unspecified = 9;
+  int32 object_truncated = 10;
+  int32 object_difficult = 11;
+  int32 object_bndbox_xmin = 12;
+  int32 object_bndbox_ymin = 13;
+  int32 object_bndbox_xmax = 14;
+  int32 object_bndbox_ymax = 15;
+}
