@@ -19,6 +19,6 @@ class StreamDatasetMetadata(betterproto.Message):
 
 
 @dataclass
-class StreamDatasetData(betterproto.Message):
+class StreamDatasetBucket(betterproto.Message):
     files: List["StreamDatasetFile"] = betterproto.message_field(1)
     metadata: List["StreamDatasetMetadata"] = betterproto.message_field(2)

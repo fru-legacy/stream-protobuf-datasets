@@ -2,17 +2,28 @@
 # url + '/data.proto.bin' + '/list.proto.bin' + '/model.py'
 
 from abc import ABC, abstractmethod
-from typing import Dict
+from typing import Dict, TypeVar, Generic
 from importlib.machinery import SourceFileLoader
+from .container.data import StreamDatasetBucket
+from .container.list import StreamDatasetList
   
 # imports the module from the given path
 
+from abc import ABC, abstractmethod
 class Parser(ABC):
     @abstractmethod
     def extract(self, bytes) -> Dict:
         pass
 
-class Downloader:
+
+T = TypeVar('T')
+class Bucket(Generic[T], StreamDatasetBucket):
+    def parse_metadata() -> T:
+        return T()
+
+print(type(Bucket[Parser].parse_metadata()))
+    
+class Stream:
     def __init__(self, url, cache, model = "model.py"):
         self.endpoints = {
             'data': url + '/data.proto.bin',

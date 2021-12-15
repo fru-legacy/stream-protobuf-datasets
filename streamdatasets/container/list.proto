@@ -1,4 +1,4 @@
-// protoc -I ./container --python_betterproto_out=. list.proto
+// protoc -I ./streamdatasets/container --python_betterproto_out=. list.proto
 
 syntax = "proto3";
 package streamdatasets.list;

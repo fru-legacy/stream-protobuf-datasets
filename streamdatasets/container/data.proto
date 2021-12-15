@@ -1,4 +1,4 @@
-// protoc -I ./container --python_betterproto_out=. data.proto
+// protoc -I ./streamdatasets/container --python_betterproto_out=. data.proto
 
 syntax = "proto3";
 package streamdatasets.data;
@@ -12,7 +12,7 @@ message StreamDatasetMetadata {
   bytes data = 1;
 }
 
-message StreamDatasetData {
+message StreamDatasetBucket {
   repeated StreamDatasetFile files = 1;
   repeated StreamDatasetMetadata metadata = 2;
 }
