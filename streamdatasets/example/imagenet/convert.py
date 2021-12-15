@@ -15,6 +15,7 @@ for train_folder in train_folders[0:1]:
       data = f.read()
     BsData = BeautifulSoup(data, "xml")
     def add_value(name):
+      print(name)
       b_value = ''.join(child for child in BsData.find_all(name)[0].children)
       if b_value not in values[name]:
         values[name].append(b_value)
