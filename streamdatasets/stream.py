@@ -15,13 +15,15 @@ class Parser(ABC):
     def extract(self, bytes) -> Dict:
         pass
 
+test = StreamDatasetBucket()
+print(test)
 
-T = TypeVar('T')
-class Bucket(Generic[T], StreamDatasetBucket):
-    def parse_metadata(t: Type[T]) -> T:
-        return t()
+#T = TypeVar('T')
+#class Bucket(Generic[T], StreamDatasetBucket):
+#    def parse_metadata(t: Type[T]) -> T:
+#        return t()
 
-print(type(Bucket[Bucket].parse_metadata(Bucket)))
+#print(type(Bucket[Bucket].parse_metadata(Bucket)))
     
 class Stream:
     def __init__(self, url, cache, model = "model.py"):
