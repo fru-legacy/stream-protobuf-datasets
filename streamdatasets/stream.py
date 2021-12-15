@@ -2,7 +2,7 @@
 # url + '/data.proto.bin' + '/list.proto.bin' + '/model.py'
 
 from abc import ABC, abstractmethod
-from typing import Dict, TypeVar, Generic
+from typing import Dict, Type, TypeVar, Generic
 from importlib.machinery import SourceFileLoader
 from .container.data import StreamDatasetBucket
 from .container.list import StreamDatasetList
@@ -18,10 +18,10 @@ class Parser(ABC):
 
 T = TypeVar('T')
 class Bucket(Generic[T], StreamDatasetBucket):
-    def parse_metadata() -> T:
-        return T()
+    def parse_metadata(t: Type[T]) -> T:
+        return t()
 
-print(type(Bucket[Parser].parse_metadata()))
+print(type(Bucket[Bucket].parse_metadata(Bucket)))
     
 class Stream:
     def __init__(self, url, cache, model = "model.py"):
