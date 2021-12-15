@@ -9,7 +9,7 @@ package model;
 // At the moment the fields that are not needed or constant are omitted 
 
 message Imagenet {
-  //string folder = 1;
+  string folder = 1;
   string filename = 2;
   //string source_db = 3;
 

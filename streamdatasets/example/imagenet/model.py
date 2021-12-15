@@ -8,7 +8,7 @@ import betterproto
 
 @dataclass
 class Imagenet(betterproto.Message):
-    # string folder = 1;
+    folder: str = betterproto.string_field(1)
     filename: str = betterproto.string_field(2)
     size_width: int = betterproto.int32_field(4)
     size_height: int = betterproto.int32_field(5)
