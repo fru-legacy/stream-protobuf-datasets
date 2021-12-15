@@ -5,7 +5,7 @@ setup(
     version='0.0.1',
     packages=find_packages(include=['streamdatasets', 'streamdatasets.*']),
     install_requires=[
-        'protobuf',
+        'betterproto',
         'requests'
     ]
 )
