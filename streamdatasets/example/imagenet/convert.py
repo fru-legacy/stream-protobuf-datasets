@@ -54,12 +54,12 @@ def _read_metadata_as_bucket(metadata, image_root_folder, clean_foldername):
     generator.append_bucket(image_folder, files, '.JPEG', group)
 
 def _read_xml_dir_as_buckets(folder, image_root_folder, clean_foldername = lambda x: x):
-  all = [_read_xml(join(folder, f)) for f in listdir(folder)[:20] if isfile(join(folder, f))]
+  all = [_read_xml(join(folder, f)) for f in listdir(folder) if isfile(join(folder, f))]
   return _read_metadata_as_bucket(all, image_root_folder, clean_foldername)
 
 def _read_jpeg_dir_as_buckets(image_root_folder, sub_folder, clean_foldername = lambda x: x):
   folder = join(image_root_folder, sub_folder)
-  all = [f for f in listdir(folder)[:20] if isfile(join(folder, f))]
+  all = [f for f in listdir(folder) if isfile(join(folder, f))]
   net = [Imagenet(sub_folder, f.removesuffix('.JPEG')) for f in all]
   return _read_metadata_as_bucket(net, image_root_folder, clean_foldername)
 
