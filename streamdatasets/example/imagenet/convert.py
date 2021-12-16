@@ -67,8 +67,6 @@ def _read_jpeg_dir_as_buckets(image_root_folder, sub_folder):
 
 label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
 _read_label_file_as_key_values(label_file)
-print(len(generator.list.lookup))
-exit()
 
 ## Read imagenet xml & jpgs
 
