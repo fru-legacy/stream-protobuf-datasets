@@ -97,9 +97,8 @@ _read_xml_dir_as_buckets(val_folder, folder_img)
 generator.start_item('test')
 test_file = join(in_dir_kaggle, 'LOC_train_solution.csv')
 # format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
-test_metadata = _read_csv_solution_file(test_file)[0:5]
-test_folder_img = join(in_dir, 'Data/CLS-LOC/test')
-_read_metadata_as_bucket(test_metadata, test_folder_img)
+test_metadata = _read_csv_solution_file(test_file, 'test')[0:5]
+_read_metadata_as_bucket(test_metadata, folder_img)
 
 
 # Imagenet().parse(ser)
