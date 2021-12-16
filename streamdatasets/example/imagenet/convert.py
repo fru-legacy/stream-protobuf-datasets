@@ -83,7 +83,7 @@ def _read_xml_dir_as_buckets(folder, image_root_folder):
 #for f in listdir(train_folder):
 #    if isdir(join(train_folder, f)):
 #      generator.start_item('train/' + f)
-#      _read_xml_dir_as_buckets(join(train_folder, f), join(train_folder_img, f))
+#      _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img)
 
 # Var
 
