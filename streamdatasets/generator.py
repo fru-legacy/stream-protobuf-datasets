@@ -24,7 +24,7 @@ class Generator():
     bucket = StreamDatasetBucket()
     bucket.start_byte = self.current_position
     bucket.end_byte = self.current_position + length
-    self.list.items[-1].buckets.append(bucket)
+    self.item_current.buckets.append(bucket)
     self.current_position += length
 
   def start_item(self, name: str, description: str = ''):
@@ -39,8 +39,6 @@ class Generator():
     self.item_current = self.item_dict[name]
 
   def append_bucket(self, path: str, files: List[str], extension: str, metadata: List[Any]):
-    bucket = StreamDatasetBucket()
-    self.item_current.buckets.append(bucket)
     data = StreamDatasetData()
     for file in files:
       with open(join(path, file + extension), 'rb') as f:
