@@ -30,8 +30,7 @@ test_folder_data = join(in_dir, 'Data/CLS-LOC/test')
 # contains e.g: ./ILSVRC2012_test_00064102.JPEG
 
 item_label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
-
-print(in_dir_kaggle, item_label_file)
+# contains e.g: n01694178 African chameleon, Chamaeleo chamaeleon
 
 def _read_item_label_file(file):
   with open(file, 'r') as f:
@@ -50,14 +49,22 @@ def _read_csv_solution_file(file) -> List[Imagenet]:
     return net
   return [line_to_ImageNet(l) for l in lines[1:]]
 
-  print(lines[0][0], list())
+def _read_xml(file):
+  def get_value(node, name):
+      return ''.join(child for child in node.find_all(name)[0].children)
+  with open(file, 'r') as f:
+    data = f.read()
+  root = BeautifulSoup(data, "xml")
+  print(get_value(root, 'xmin'))
 
 
-_read_item_label_file(item_label_file)
-nets = _read_csv_solution_file(test_file)
+#_read_item_label_file(item_label_file)
+#print(generator.list.lookup[0:50])
 
-print(nets[0:5])
-print(generator.list.lookup[0:50])
+#nets = _read_csv_solution_file(test_file)
+#print(nets[0:5])
+
+_read_xml(join(train_folder, 'n02606052/n02606052_188.xml'))
 
 exit()
 
