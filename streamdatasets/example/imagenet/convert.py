@@ -76,7 +76,7 @@ train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052
 train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
 
 for idx, f in enumerate(listdir(train_folder)):
-    print('Train: ' + idx)
+    print(f'Train: {idx}')
     if isdir(join(train_folder, f)):
       generator.start_item('train/' + f)
       _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img)
