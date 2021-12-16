@@ -41,7 +41,7 @@ def _read_csv_solution_file(file):
   with open(file, 'r') as f:
     lines = [l.split(',') for l in f.readlines()]
   del lines[0]
-  print(lines[0][0], grouper(lines[0][1].split(), 4))
+  print(lines[0][0], list(grouper(lines[0][1].split(), 4)))
 
 
 _read_item_label_file(item_label_file)
