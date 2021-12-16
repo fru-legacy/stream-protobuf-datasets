@@ -13,6 +13,7 @@ in_dir_kaggle = '/data'
 
 max_bucket_size = 10
 generator = Generator(out_dir)
+folder_img = join(in_dir, 'Data/CLS-LOC')
 
 def _read_label_file_as_key_values(file):
   with open(file, 'r') as f:
@@ -88,8 +89,7 @@ def _read_xml_dir_as_buckets(folder, image_root_folder):
 
 generator.start_item('val')
 val_folder = join(in_dir, 'Annotations/CLS-LOC/val') # ./ILSVRC2012_val_00024102.xml
-val_folder_img = join(in_dir, 'Data/CLS-LOC/val') # ./ILSVRC2012_val_00024102.JPEG
-_read_xml_dir_as_buckets(val_folder, val_folder_img)
+_read_xml_dir_as_buckets(val_folder, folder_img)
 
 # Test
 
