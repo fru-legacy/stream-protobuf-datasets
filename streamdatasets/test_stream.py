@@ -7,7 +7,7 @@ list = StreamDatasetList().parse(list_data)
 print(len(list.lookup))
 print(len(list.items))
 print(len(list.items[10].buckets))
-bucket = list.items[10].buckets[2]
+bucket = list.items[10].buckets[1]
 
 with open('/data/streamable/data.proto.bin', 'rb') as f:
   f.seek(bucket.start_byte)
