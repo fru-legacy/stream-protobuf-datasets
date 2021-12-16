@@ -15,5 +15,11 @@ message StreamDatasetItem {
 }
 
 message StreamDatasetList {
-  repeated StreamDatasetItem items = 1;
+  repeated StreamDatasetKeyValue lookup = 1;
+  repeated StreamDatasetItem items = 2;
+}
+
+message StreamDatasetKeyValue {
+  string key = 1;
+  string value = 2;
 }

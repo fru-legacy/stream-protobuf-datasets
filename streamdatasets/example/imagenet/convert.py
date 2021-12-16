@@ -36,7 +36,8 @@ print(in_dir_kaggle, item_label_file)
 def _read_item_label_file(file):
   with open(file, 'r') as f:
     lines = [l.split(',') for l in f.readlines()]
-  print(lines[0][0], lines[0][1].strip())
+  for line in lines:
+    generator.add_key_value(line[0], line[1].strip())
 
 def _read_csv_solution_file(file) -> List[Imagenet]:
   with open(file, 'r') as f:
@@ -56,6 +57,7 @@ _read_item_label_file(item_label_file)
 nets = _read_csv_solution_file(test_file)
 
 print(nets[0:5])
+print(generator.list.lookup[0:5])
 
 exit()
 

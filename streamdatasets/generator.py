@@ -3,7 +3,7 @@ from os.path import join
 from pathlib import Path
 
 from .container.data import StreamDatasetData, StreamDatasetFile, StreamDatasetMetadata
-from .container.list import StreamDatasetList, StreamDatasetBucket, StreamDatasetItem
+from .container.list import StreamDatasetKeyValue, StreamDatasetList, StreamDatasetBucket, StreamDatasetItem
 
 class Generator():
   def __init__(self, out_path: str):
@@ -54,6 +54,9 @@ class Generator():
     data_bytes = bytes(data)
     self.__add_bucket(len(data_bytes))
     self.file_data.write(data_bytes)
+
+  def add_key_value(self, key: str, value: str):
+    self.list.lookup.append(StreamDatasetKeyValue(key, value))
 
   def save_list(self):
     self.file_list.write(bytes(self.list))
