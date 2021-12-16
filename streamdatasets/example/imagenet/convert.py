@@ -1,4 +1,3 @@
-import csv
 from os import listdir
 from os.path import isfile, isdir, join
 from typing import List
@@ -12,39 +11,24 @@ out_dir = '/data/streamable'
 in_dir = '/data/ILSVRC'
 in_dir_kaggle = '/data'
 
+max_bucket_size = 10
 generator = Generator(out_dir)
 
-train_folder = join(in_dir, 'Annotations/CLS-LOC/train')
-# contains e.g: ./n02606052/n02606052_188.xml
-train_folder_data = join(in_dir, 'Data/CLS-LOC/train')
-# contains e.g: ./n02606052/n02606052_188.JPEG
-
-val_folder = join(in_dir, 'Annotations/CLS-LOC/val')
-# contains e.g: ./ILSVRC2012_val_00024102.xml
-val_folder_data = join(in_dir, 'Data/CLS-LOC/val')
-# contains e.g: ./ILSVRC2012_val_00024102.JPEG
-
-test_file = join(in_dir_kaggle, 'LOC_train_solution.csv')
-# format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
-test_folder_data = join(in_dir, 'Data/CLS-LOC/test')
-# contains e.g: ./ILSVRC2012_test_00064102.JPEG
-
-item_label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
-# contains e.g: n01694178 African chameleon, Chamaeleo chamaeleon
-
-def _read_item_label_file(file):
+def _read_label_file_as_key_values(file):
   with open(file, 'r') as f:
     lines = [l.split(' ', 1) for l in f.readlines()]
   for line in lines:
     generator.add_key_value(line[0], line[1].strip())
 
-def _read_csv_solution_file(file) -> List[Imagenet]:
+def _read_csv_solution_file(file, folder) -> List[Imagenet]:
   with open(file, 'r') as f:
     lines = [l.split(',') for l in f.readlines()]
   def line_to_ImageNet(line):
     boxes = grouper(line[1].split(), 5)
     net = Imagenet()
     net.filename = line[0]
+    net.folder = folder
+    # size is missing here
     net.objects = [Imagenet_Object(b[0], int(b[1]), int(b[2]), int(b[3]), int(b[4])) for b in boxes]
     return net
   return [line_to_ImageNet(l) for l in lines[1:]]
@@ -55,51 +39,67 @@ def _read_xml(file):
   with open(file, 'r') as f:
     data = f.read()
   root = BeautifulSoup(data, "xml")
-  print(root.find_all('object')[0])
-  print(get_value(root, 'xmin'))
-  print(get_value(root.find_all('object')[0], 'xmin'))
+  net = Imagenet()
+  net.folder = get_value(root,'folder')
+  net.filename = get_value(root,'filename')
+  net.size_width = int(get_value(root,'width'))
+  net.size_height = int(get_value(root,'height'))
+  for object in root.find_all('object'):
+    net.objects.append(Imagenet_Object())
+    net.objects[-1].name = get_value(object, 'name')
+    net.objects[-1].bndbox_xmin = int(get_value(object, 'xmin'))
+    net.objects[-1].bndbox_ymin = int(get_value(object, 'ymin'))
+    net.objects[-1].bndbox_xmax = int(get_value(object, 'xmax'))
+    net.objects[-1].bndbox_ymax = int(get_value(object, 'ymax'))
+  return net
 
+def _get_path_and_files(group: List[Imagenet]):
+  return (group[0].folder, [f.filename for f in group])
 
-#_read_item_label_file(item_label_file)
-#print(generator.list.lookup[0:50])
+def _read_metadata_as_bucket(metadata, image_root_folder):
+  for group in grouper(metadata, max_bucket_size):
+    sub_folder, files = _get_path_and_files(group)
+    image_folder = join(image_root_folder, sub_folder)
+    generator.append_bucket(image_folder, files, '.JPEG', [bytes(d) for d in group])
 
-#nets = _read_csv_solution_file(test_file)
-#print(nets[0:5])
+def _read_xml_dir_as_buckets(folder, image_root_folder):
+  all = [_read_xml(f) for f in listdir(folder) if isfile(join(folder, f))]
+  return _read_metadata_as_bucket(all, image_root_folder)
+
+## Read kaggle csv and txt files
+
+label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
+_read_label_file_as_key_values(label_file)
+
+## Read imagenet xml & jpgs
+
+# Test
+
+train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
+train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
+
+for f in listdir(train_folder):
+    if isdir(join(train_folder, f)):
+      generator.start_item('train/' + f)
+      _read_xml_dir_as_buckets(join(train_folder, f), join(train_folder_img, f))
+
+# Var
+
+generator.start_item('val')
+val_folder = join(in_dir, 'Annotations/CLS-LOC/val') # ./ILSVRC2012_val_00024102.xml
+val_folder_img = join(in_dir, 'Data/CLS-LOC/val') # ./ILSVRC2012_val_00024102.JPEG
+_read_xml_dir_as_buckets(val_folder, val_folder_img)
+
+# Test
+
+generator.start_item('test')
+test_file = join(in_dir_kaggle, 'LOC_train_solution.csv')
+# format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
+test_metadata = _read_csv_solution_file(test_file)
+test_folder_img = join(in_dir, 'Data/CLS-LOC/test')
+_read_metadata_as_bucket(test_metadata, test_folder_img)
+
 
 _read_xml(join(train_folder, 'n02606052/n02606052_188.xml'))
 
-exit()
-
-train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, f))]
-
-values = {'difficult': [], 'truncated': [], 'database': [], 'depth': [], 'segmented': [], 'pose': []}
-step = 1
-for train_folder in train_folders[0:1]:
-  print(step)
-  step += 1
-  files = [f for f in listdir(train_folder) if isfile(join(train_folder, f))]
-  for file in files[0:1]:
-    with open(join(train_folder, file), 'r') as f:
-      data = f.read()
-    BsData = BeautifulSoup(data, "xml")
-    def get_value(name):
-      return ''.join(child for child in BsData.find_all(name)[0].children)
-    model = Imagenet().from_dict({
-      'folder': get_value('folder'),
-      'filename': get_value('filename'),
-      'size_width': int(get_value('width')),
-      'size_height': int(get_value('height')),
-      'object_name': get_value('name'),
-      'object_bndbox_xmin': int(get_value('xmin')),
-      'object_bndbox_ymin': int(get_value('ymin')),
-      'object_bndbox_xmax': int(get_value('xmax')),
-      'object_bndbox_ymax': int(get_value('ymax'))
-    })
-    ser = bytes(model)
-    print(ser)
-    restored = Imagenet().parse(ser)
-    print(restored)
-    with open(join(folder_data, model.folder, model.filename + '.JPEG'), 'rb') as f:
-      print(type(f.read()))
-
-print(values)
+# Imagenet().parse(ser)
