@@ -54,7 +54,9 @@ def _read_xml(file):
       return ''.join(child for child in node.find_all(name)[0].children)
   with open(file, 'r') as f:
     data = f.read()
+  print(data)
   root = BeautifulSoup(data, "xml")
+  print(root.find_all('object'))
   print(get_value(root, 'xmin'))
 
 
