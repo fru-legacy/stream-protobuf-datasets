@@ -1,4 +1,4 @@
-sudo apt install transmission-cli unzip
+sudo apt install transmission-cli
 pip install kaggle
 
 cd /data
@@ -14,11 +14,7 @@ tar -xvzf /data/ILSVRC2017_CLS-LOC.tar.gz
 # Get progress with: ls ./Downloads/ILSVRC/Data/CLS-LOC/train/ | wc -l
 
 # Under Kaggle > Your Profile > Account > Create New API Token
-# nano 
 kaggle competitions download -c imagenet-object-localization-challenge -f LOC_synset_mapping.txt
-kaggle competitions download -c imagenet-object-localization-challenge -f LOC_train_solution.csv
-unzip /data/LOC_train_solution.csv.zip
-rm /data/LOC_train_solution.csv.zip
 
 # Validate hash: 
 pv /data/ILSVRC2017_CLS-LOC.tar.gz | sha1sum

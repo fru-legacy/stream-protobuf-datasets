@@ -7,6 +7,8 @@ from .model import Imagenet, Imagenet_Object
 from ...generator import Generator
 from ...helper import grouper
 
+## Configure paths
+
 out_dir = '/data/streamable'
 in_dir = '/data/ILSVRC'
 in_dir_kaggle = '/data'
@@ -20,20 +22,6 @@ def _read_label_file_as_key_values(file):
     lines = [l.split(' ', 1) for l in f.readlines()]
   for line in lines:
     generator.add_key_value(line[0], line[1].strip())
-
-def _read_csv_solution_file(file, folder) -> List[Imagenet]:
-  with open(file, 'r') as f:
-    lines = f.readlines()
-  lines = lines[0:5]
-  def line_to_ImageNet(line):
-    boxes = grouper(line[1].split(), 5)
-    net = Imagenet()
-    net.filename = line[0]
-    net.folder = folder
-    # size is missing here
-    net.objects = [Imagenet_Object(b[0], int(b[1]), int(b[2]), int(b[3]), int(b[4])) for b in boxes]
-    return net
-  return [line_to_ImageNet(l.split(',')) for l in lines[1:]]
 
 def _read_xml(file):
   def get_value(node, name):
@@ -70,6 +58,12 @@ def _read_xml_dir_as_buckets(folder, image_root_folder):
   all = [_read_xml(join(folder, f)) for f in listdir(folder)[0:5] if isfile(join(folder, f))]
   return _read_metadata_as_bucket(all, image_root_folder)
 
+def _read_jpeg_dir_as_buckets(image_root_folder, sub_folder):
+  folder = join(image_root_folder, sub_folder)
+  all = [f for f in listdir(folder)[0:5] if isfile(join(folder, f))]
+  net = [Imagenet(sub_folder, f.removesuffix('.JPEG')) for f in all]
+  return _read_metadata_as_bucket(net, image_root_folder)
+
 ## Read kaggle csv and txt files
 
 label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
@@ -96,10 +90,7 @@ _read_xml_dir_as_buckets(val_folder, folder_img)
 # Test
 
 generator.start_item('test')
-test_file = join(in_dir_kaggle, 'LOC_train_solution.csv')
-# format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
-test_metadata = _read_csv_solution_file(test_file, 'test')[0:5]
-_read_metadata_as_bucket(test_metadata, folder_img)
+_read_jpeg_dir_as_buckets(folder_img, 'test')
 
 
 # Imagenet().parse(ser)
