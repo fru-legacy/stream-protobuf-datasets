@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, List
 from os.path import join
 from pathlib import Path
 
@@ -38,7 +38,7 @@ class Generator():
   def set_current_item(self, name: str):
     self.item_current = self.item_dict[name]
 
-  def append_bucket(self, path: str, files: List[str], extension: str, metadata: List[bytes]):
+  def append_bucket(self, path: str, files: List[str], extension: str, metadata: List[Any]):
     bucket = StreamDatasetBucket()
     self.item_current.buckets.append(bucket)
     data = StreamDatasetData()
@@ -50,7 +50,7 @@ class Generator():
         data.files.append(file_container)
     for meta in metadata:
       data.metadata.append(StreamDatasetMetadata())
-      data.metadata[-1].data = meta
+      data.metadata[-1].data = bytes(meta)
     data_bytes = bytes(data)
     self.__add_bucket(len(data_bytes))
     self.file_data.write(data_bytes)

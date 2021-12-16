@@ -60,7 +60,7 @@ def _read_metadata_as_bucket(metadata, image_root_folder):
   for group in grouper(metadata, max_bucket_size):
     sub_folder, files = _get_path_and_files(group)
     image_folder = join(image_root_folder, sub_folder)
-    generator.append_bucket(image_folder, files, '.JPEG', [bytes(d) for d in group])
+    generator.append_bucket(image_folder, files, '.JPEG', group)
 
 def _read_xml_dir_as_buckets(folder, image_root_folder):
   all = [_read_xml(f) for f in listdir(folder)[0:5] if isfile(join(folder, f))]
