@@ -47,7 +47,7 @@ def _read_csv_solution_file(file) -> List[Imagenet]:
     net.filename = line[0]
     net.objects = [Imagenet_Object(b[0], int(b[1]), int(b[2]), int(b[3]), int(b[4])) for b in boxes]
     return net
-  return map(line_to_ImageNet, lines[1:])
+  return list(map(line_to_ImageNet, lines[1:]))
 
   print(lines[0][0], list())
 
