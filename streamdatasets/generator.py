@@ -10,8 +10,8 @@ class Generator():
     Path(out_path).mkdir(parents=True, exist_ok=True)
     self.out_path = out_path
     self.list = StreamDatasetList()
-    self.file_data = open(join(out_path, 'data.proto.bin'), 'w')
-    self.file_list = open(join(out_path, 'list.proto.bin'), 'w')
+    self.file_data = open(join(out_path, 'data.proto.bin'), 'wb')
+    self.file_list = open(join(out_path, 'list.proto.bin'), 'wb')
     self.current_position = 0
     self.item_current = None
     self.item_dict = dict()
