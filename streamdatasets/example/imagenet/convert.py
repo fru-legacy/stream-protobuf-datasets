@@ -39,6 +39,7 @@ def _read_item_label_file(file):
 def _read_csv_solution_file(file):
   with open(file, 'r') as f:
     lines = [l.split(',') for l in f.readlines()]
+  del lines[0]
   print(lines[0][0])
 
 
