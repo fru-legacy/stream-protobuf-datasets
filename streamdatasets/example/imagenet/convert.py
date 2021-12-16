@@ -43,28 +43,25 @@ def _read_xml(file):
     net.objects[-1].bndbox_ymax = int(get_value(object, 'ymax'))
   return net
 
-def _get_path_and_files(group: List[Imagenet]):
-  folder = group[0].folder
-  if not folder.startswith('n'):
-    folder = 'n' + folder
-  return (folder, [f.filename for f in group])
+def _get_path_and_files(group: List[Imagenet], clean_foldername):
+  return (clean_foldername(group[0].folder), [f.filename for f in group])
 
-def _read_metadata_as_bucket(metadata, image_root_folder):
+def _read_metadata_as_bucket(metadata, image_root_folder, clean_foldername):
   for group in grouper(metadata, max_bucket_size):
     group = [g for g in group if g is not None]
-    sub_folder, files = _get_path_and_files(group)
+    sub_folder, files = _get_path_and_files(group, clean_foldername)
     image_folder = join(image_root_folder, sub_folder)
     generator.append_bucket(image_folder, files, '.JPEG', group)
 
-def _read_xml_dir_as_buckets(folder, image_root_folder):
+def _read_xml_dir_as_buckets(folder, image_root_folder, clean_foldername = lambda x: x):
   all = [_read_xml(join(folder, f)) for f in listdir(folder)[0:5] if isfile(join(folder, f))]
-  return _read_metadata_as_bucket(all, image_root_folder)
+  return _read_metadata_as_bucket(all, image_root_folder, clean_foldername)
 
-def _read_jpeg_dir_as_buckets(image_root_folder, sub_folder):
+def _read_jpeg_dir_as_buckets(image_root_folder, sub_folder, clean_foldername = lambda x: x):
   folder = join(image_root_folder, sub_folder)
   all = [f for f in listdir(folder)[0:5] if isfile(join(folder, f))]
   net = [Imagenet(sub_folder, f.removesuffix('.JPEG')) for f in all]
-  return _read_metadata_as_bucket(net, image_root_folder)
+  return _read_metadata_as_bucket(net, image_root_folder, clean_foldername)
 
 ## Read kaggle csv and txt files
 
@@ -78,11 +75,12 @@ _read_label_file_as_key_values(label_file)
 train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
 train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
 
+clean_train_foldername = lambda f: f if f.startswith('n') else 'n' + f
 for idx, f in enumerate(listdir(train_folder)):
     print(f'Train: {idx}')
     if isdir(join(train_folder, f)):
       generator.start_item('train/' + f)
-      _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img)
+      _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img, clean_train_foldername)
 
 # Var
 
