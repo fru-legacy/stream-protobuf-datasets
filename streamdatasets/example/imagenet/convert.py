@@ -78,13 +78,13 @@ def _read_xml_dir_as_buckets(folder, image_root_folder):
 
 # Test
 
-#train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
-#train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
+train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
+train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
 
-#for f in listdir(train_folder):
-#    if isdir(join(train_folder, f)):
-#      generator.start_item('train/' + f)
-#      _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img)
+for f in listdir(train_folder)[0:5]:
+    if isdir(join(train_folder, f)):
+      generator.start_item('train/' + f)
+      _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img)
 
 # Var
 
