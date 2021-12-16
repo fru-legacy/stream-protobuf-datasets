@@ -75,7 +75,7 @@ _read_label_file_as_key_values(label_file)
 train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
 train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
 
-for idx, f in listdir(train_folder):
+for idx, f in enumerate(listdir(train_folder)):
     print('Train: ' + idx)
     if isdir(join(train_folder, f)):
       generator.start_item('train/' + f)
