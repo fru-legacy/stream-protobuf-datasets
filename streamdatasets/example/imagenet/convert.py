@@ -12,22 +12,22 @@ in_dir_kaggle = '/data'
 
 generator = Generator(out_dir)
 
-train_folder = join(in_dir, '/Annotations/CLS-LOC/train')
+train_folder = join(in_dir, 'Annotations/CLS-LOC/train')
 # contains e.g: ./n02606052/n02606052_188.xml
-train_folder_data = join(in_dir, '/data/ILSVRC/Data/CLS-LOC/train')
+train_folder_data = join(in_dir, 'Data/CLS-LOC/train')
 # contains e.g: ./n02606052/n02606052_188.JPEG
 
-val_folder = join(in_dir, '/data/ILSVRC/Annotations/CLS-LOC/val')
+val_folder = join(in_dir, 'Annotations/CLS-LOC/val')
 # contains e.g: ./ILSVRC2012_val_00024102.xml
-val_folder_data = join(in_dir, '/data/ILSVRC/Data/CLS-LOC/val')
+val_folder_data = join(in_dir, 'Data/CLS-LOC/val')
 # contains e.g: ./ILSVRC2012_val_00024102.JPEG
 
-test_file = join(in_dir_kaggle, '/LOC_train_solution.csv')
+test_file = join(in_dir_kaggle, 'LOC_train_solution.csv')
 # format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
-test_folder_data = join(in_dir, '/data/ILSVRC/Data/CLS-LOC/test')
+test_folder_data = join(in_dir, 'Data/CLS-LOC/test')
 # contains e.g: ./ILSVRC2012_test_00064102.JPEG
 
-item_label_file = join(in_dir_kaggle, '/LOC_synset_mapping.txt')
+item_label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
 
 print(in_dir_kaggle, item_label_file)
 
