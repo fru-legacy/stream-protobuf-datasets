@@ -4,7 +4,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Type, TypeVar, Generic
 from importlib.machinery import SourceFileLoader
-from .container.data import StreamDatasetBucket, StreamDatasetFile, StreamDatasetMetadata
+from .container.data import StreamDatasetData, StreamDatasetFile, StreamDatasetMetadata
 from .container.list import StreamDatasetList
 import requests
   
