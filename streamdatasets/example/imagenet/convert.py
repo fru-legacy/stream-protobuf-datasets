@@ -63,25 +63,25 @@ def _read_metadata_as_bucket(metadata, image_root_folder):
     generator.append_bucket(image_folder, files, '.JPEG', [bytes(d) for d in group])
 
 def _read_xml_dir_as_buckets(folder, image_root_folder):
-  all = [_read_xml(f) for f in listdir(folder) if isfile(join(folder, f))]
+  all = [_read_xml(f) for f in listdir(folder)[0:5] if isfile(join(folder, f))]
   return _read_metadata_as_bucket(all, image_root_folder)
 
 ## Read kaggle csv and txt files
 
-label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
-_read_label_file_as_key_values(label_file)
+#label_file = join(in_dir_kaggle, 'LOC_synset_mapping.txt')
+#_read_label_file_as_key_values(label_file)
 
 ## Read imagenet xml & jpgs
 
 # Test
 
-train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
-train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
+#train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
+#train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
 
-for f in listdir(train_folder):
-    if isdir(join(train_folder, f)):
-      generator.start_item('train/' + f)
-      _read_xml_dir_as_buckets(join(train_folder, f), join(train_folder_img, f))
+#for f in listdir(train_folder):
+#    if isdir(join(train_folder, f)):
+#      generator.start_item('train/' + f)
+#      _read_xml_dir_as_buckets(join(train_folder, f), join(train_folder_img, f))
 
 # Var
 
@@ -92,14 +92,12 @@ _read_xml_dir_as_buckets(val_folder, val_folder_img)
 
 # Test
 
-generator.start_item('test')
-test_file = join(in_dir_kaggle, 'LOC_train_solution.csv')
-# format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
-test_metadata = _read_csv_solution_file(test_file)
-test_folder_img = join(in_dir, 'Data/CLS-LOC/test')
-_read_metadata_as_bucket(test_metadata, test_folder_img)
+# generator.start_item('test')
+#test_file = join(in_dir_kaggle, 'LOC_train_solution.csv')
+## format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
+#test_metadata = _read_csv_solution_file(test_file)
+#test_folder_img = join(in_dir, 'Data/CLS-LOC/test')
+#_read_metadata_as_bucket(test_metadata, test_folder_img)
 
-
-_read_xml(join(train_folder, 'n02606052/n02606052_188.xml'))
 
 # Imagenet().parse(ser)
