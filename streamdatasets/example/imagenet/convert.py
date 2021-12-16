@@ -1,11 +1,49 @@
+import csv
 from os import listdir
 from os.path import isfile, isdir, join
 from bs4 import BeautifulSoup
-from .model import Imagenet
 
-#data/ILSVRC/Annotations/CLS-LOC/train/n02606052/n02606052_188.xml
-folder = "/data/ILSVRC/Annotations/CLS-LOC/train"
-folder_data = "/data/ILSVRC/Data/CLS-LOC/train"
+from .model import Imagenet
+from ...generator import Generator
+
+out_dir = '/data/streamable'
+in_dir = '/data/ILSVRC'
+in_dir_kaggle = '/data'
+
+generator = Generator(out_dir)
+
+train_folder = join(in_dir, '/Annotations/CLS-LOC/train')
+# contains e.g: ./n02606052/n02606052_188.xml
+train_folder_data = join(in_dir, '/data/ILSVRC/Data/CLS-LOC/train')
+# contains e.g: ./n02606052/n02606052_188.JPEG
+
+val_folder = join(in_dir, '/data/ILSVRC/Annotations/CLS-LOC/val')
+# contains e.g: ./ILSVRC2012_val_00024102.xml
+val_folder_data = join(in_dir, '/data/ILSVRC/Data/CLS-LOC/val')
+# contains e.g: ./ILSVRC2012_val_00024102.JPEG
+
+test_file = join(in_dir_kaggle, '/LOC_train_solution.csv')
+# format: n02017213_4263,n02017213 355 155 430 273 n02017213 178 123 290 332
+test_folder_data = join(in_dir, '/data/ILSVRC/Data/CLS-LOC/test')
+# contains e.g: ./ILSVRC2012_test_00064102.JPEG
+
+item_label_file = join(in_dir_kaggle, '/LOC_synset_mapping.txt')
+
+def _read_item_label_file(file):
+  with open(file, 'r') as f:
+    lines = [l.split(',') for l in file.readlines()]
+  print(lines[0][0])
+
+def _read_csv_solution_file(file):
+  with open(file, 'r') as f:
+    lines = [l.split(',') for l in file.readlines()]
+  print(lines[0][0])
+
+
+_read_item_label_file(item_label_file)
+_read_csv_solution_file(test_file)
+
+exit()
 
 train_folders = [join(folder, f) for f in listdir(folder) if isdir(join(folder, f))]
 

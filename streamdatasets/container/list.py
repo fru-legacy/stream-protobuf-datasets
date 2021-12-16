@@ -14,6 +14,12 @@ class StreamDatasetBucket(betterproto.Message):
 
 
 @dataclass
-class StreamDatasetList(betterproto.Message):
+class StreamDatasetItem(betterproto.Message):
     name: str = betterproto.string_field(1)
-    buckets: List["StreamDatasetBucket"] = betterproto.message_field(2)
+    description: str = betterproto.string_field(2)
+    buckets: List["StreamDatasetBucket"] = betterproto.message_field(3)
+
+
+@dataclass
+class StreamDatasetList(betterproto.Message):
+    items: List["StreamDatasetItem"] = betterproto.message_field(1)

@@ -1,4 +1,7 @@
-sudo apt install transmission-cli
+sudo apt install transmission-cli unzip
+pip install kaggle
+
+cd /data
 
 # Visit https://academictorrents.com/browse.php?search=imagenet&sort_field=seeders&sort_dir=DESC
 # Get ILSVRC2017_CLS-LOC.tar.gz (Size 166.02GB) torrent url
@@ -7,11 +10,18 @@ transmission-cli https://academictorrents.com/download/943977d8c96892d2423763833
 # Get all processes with: ps -aux
 # Reconnect to process $pid with: sudo strace -ewrite -p $pid
 
-tar -xvzf ./Downloads/ILSVRC2017_CLS-LOC.tar.gz
+tar -xvzf /data/ILSVRC2017_CLS-LOC.tar.gz
 # Get progress with: ls ./Downloads/ILSVRC/Data/CLS-LOC/train/ | wc -l
 
+# Under Kaggle > Your Profile > Account > Create New API Token
+# nano 
+kaggle competitions download -c imagenet-object-localization-challenge -f LOC_synset_mapping.txt
+kaggle competitions download -c imagenet-object-localization-challenge -f LOC_train_solution.csv
+unzip /data/LOC_train_solution.csv.zip
+rm /data/LOC_train_solution.csv.zip
+
 # Validate hash: 
-pv /data/ILSVRC2017_CLS-LOC2.tar.gz | sha1sum
+pv /data/ILSVRC2017_CLS-LOC.tar.gz | sha1sum
 
 pip3 install git+https://github.com/fru/stream-protobuf-datasets
 python -m streamdatasets.example.imagenet.convert

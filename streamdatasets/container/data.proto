@@ -12,7 +12,7 @@ message StreamDatasetMetadata {
   bytes data = 1;
 }
 
-message StreamDatasetBucket {
+message StreamDatasetData {
   repeated StreamDatasetFile files = 1;
   repeated StreamDatasetMetadata metadata = 2;
 }
