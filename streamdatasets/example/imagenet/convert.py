@@ -54,10 +54,10 @@ def _read_xml(file):
       return ''.join(child for child in node.find_all(name)[0].children)
   with open(file, 'r') as f:
     data = f.read()
-  print(data)
   root = BeautifulSoup(data, "xml")
-  print(root.find_all('object'))
+  print(root.find_all('object')[0])
   print(get_value(root, 'xmin'))
+  print(get_value(root.find_all('object')[0], 'xmin'))
 
 
 #_read_item_label_file(item_label_file)
