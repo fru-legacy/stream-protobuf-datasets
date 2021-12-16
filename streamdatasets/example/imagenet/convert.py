@@ -29,7 +29,7 @@ test_folder_data = join(in_dir, '/data/ILSVRC/Data/CLS-LOC/test')
 
 item_label_file = join(in_dir_kaggle, '/LOC_synset_mapping.txt')
 
-print(item_label_file)
+print(in_dir_kaggle, item_label_file)
 
 def _read_item_label_file(file):
   with open(file, 'r') as f:
