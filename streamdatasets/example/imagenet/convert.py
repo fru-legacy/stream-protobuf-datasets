@@ -51,7 +51,7 @@ def _read_metadata_as_bucket(metadata, image_root_folder):
     group = [g for g in group if g is not None]
     sub_folder, files = _get_path_and_files(group)
     image_folder = join(image_root_folder, sub_folder)
-    print(image_folder, files)
+    print(image_folder, files, group)
     generator.append_bucket(image_folder, files, '.JPEG', group)
 
 def _read_xml_dir_as_buckets(folder, image_root_folder):
@@ -92,5 +92,6 @@ _read_xml_dir_as_buckets(val_folder, folder_img)
 generator.start_item('test')
 _read_jpeg_dir_as_buckets(folder_img, 'test')
 
+generator.save_list()
 
 # Imagenet().parse(ser)
