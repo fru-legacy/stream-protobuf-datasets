@@ -35,7 +35,7 @@ print(in_dir_kaggle, item_label_file)
 
 def _read_item_label_file(file):
   with open(file, 'r') as f:
-    lines = [l.split(',') for l in f.readlines()]
+    lines = [l.split(' ', 1) for l in f.readlines()]
   for line in lines:
     print(len(line))
     generator.add_key_value(line[0], line[1].strip())
