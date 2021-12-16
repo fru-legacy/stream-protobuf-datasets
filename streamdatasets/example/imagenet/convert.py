@@ -37,6 +37,7 @@ def _read_item_label_file(file):
   with open(file, 'r') as f:
     lines = [l.split(',') for l in f.readlines()]
   for line in lines:
+    print(len(line))
     generator.add_key_value(line[0], line[1].strip())
 
 def _read_csv_solution_file(file) -> List[Imagenet]:
