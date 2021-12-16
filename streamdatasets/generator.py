@@ -16,10 +16,6 @@ class Generator():
     self.item_current = None
     self.item_dict = dict()
 
-  def __del__(self):
-    self.file_data.close()
-    self.file_list.close()
-
   def __add_bucket(self, length: int):
     bucket = StreamDatasetBucket()
     bucket.start_byte = self.current_position
@@ -58,3 +54,5 @@ class Generator():
 
   def save_list(self):
     self.file_list.write(bytes(self.list))
+    self.file_list.close()
+    self.file_data.close()
