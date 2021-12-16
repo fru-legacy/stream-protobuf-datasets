@@ -37,7 +37,6 @@ def _read_item_label_file(file):
   with open(file, 'r') as f:
     lines = [l.split(' ', 1) for l in f.readlines()]
   for line in lines:
-    print(len(line))
     generator.add_key_value(line[0], line[1].strip())
 
 def _read_csv_solution_file(file) -> List[Imagenet]:
@@ -58,7 +57,7 @@ _read_item_label_file(item_label_file)
 nets = _read_csv_solution_file(test_file)
 
 print(nets[0:5])
-print(generator.list.lookup[0:5])
+print(generator.list.lookup[0:50])
 
 exit()
 
