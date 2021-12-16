@@ -27,7 +27,7 @@ class Generator():
     self.list.items[-1].buckets.append(bucket)
     self.current_position += length
 
-  def start_item(self, name: str, description: str):
+  def start_item(self, name: str, description: str = ''):
     item = StreamDatasetItem()
     item.name = name
     item.description = description
