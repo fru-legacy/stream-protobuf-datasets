@@ -23,7 +23,8 @@ def _read_label_file_as_key_values(file):
 
 def _read_csv_solution_file(file, folder) -> List[Imagenet]:
   with open(file, 'r') as f:
-    lines = [l.split(',') for l in f.readlines()]
+    lines = f.readlines()
+  lines = lines[0:5]
   def line_to_ImageNet(line):
     boxes = grouper(line[1].split(), 5)
     net = Imagenet()
@@ -32,7 +33,7 @@ def _read_csv_solution_file(file, folder) -> List[Imagenet]:
     # size is missing here
     net.objects = [Imagenet_Object(b[0], int(b[1]), int(b[2]), int(b[3]), int(b[4])) for b in boxes]
     return net
-  return [line_to_ImageNet(l) for l in lines[1:]]
+  return [line_to_ImageNet(l.split(',')) for l in lines[1:]]
 
 def _read_xml(file):
   def get_value(node, name):
