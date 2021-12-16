@@ -9,25 +9,6 @@ from .container.list import StreamDatasetList
 import requests
   
 # imports the module from the given path
-
-from abc import ABC, abstractmethod
-class Parser(ABC):
-    @abstractmethod
-    def extract(self, bytes) -> Dict:
-        pass
-
-#test = StreamDatasetBucket()
-#test.files.append(StreamDatasetFile())
-#print(test)
-
-#r=requests.get("http://www.example.com/", headers={"content-type":"text"})
-
-#T = TypeVar('T')
-#class Bucket(Generic[T], StreamDatasetBucket):
-#    def parse_metadata(t: Type[T]) -> T:
-#        return t()
-
-#print(type(Bucket[Bucket].parse_metadata(Bucket)))
     
 class Stream:
     def __init__(self, url, cache, model = "model.py"):
