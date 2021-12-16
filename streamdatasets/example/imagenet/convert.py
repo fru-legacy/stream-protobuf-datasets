@@ -51,7 +51,6 @@ def _read_metadata_as_bucket(metadata, image_root_folder):
     group = [g for g in group if g is not None]
     sub_folder, files = _get_path_and_files(group)
     image_folder = join(image_root_folder, sub_folder)
-    print(image_folder, files, group)
     generator.append_bucket(image_folder, files, '.JPEG', group)
 
 def _read_xml_dir_as_buckets(folder, image_root_folder):
@@ -76,7 +75,8 @@ _read_label_file_as_key_values(label_file)
 train_folder = join(in_dir, 'Annotations/CLS-LOC/train') # ./n02606052/n02606052_188.xml
 train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_188.JPEG
 
-for f in listdir(train_folder)[0:5]:
+for idx, f in listdir(train_folder):
+    print('Train: ' + idx)
     if isdir(join(train_folder, f)):
       generator.start_item('train/' + f)
       _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img)

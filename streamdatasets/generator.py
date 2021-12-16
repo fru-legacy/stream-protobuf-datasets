@@ -57,5 +57,4 @@ class Generator():
     self.list.lookup.append(StreamDatasetKeyValue(key, value))
 
   def save_list(self):
-    print(self.list.items)
     self.file_list.write(bytes(self.list))
