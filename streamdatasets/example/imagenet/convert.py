@@ -44,7 +44,10 @@ def _read_xml(file):
   return net
 
 def _get_path_and_files(group: List[Imagenet]):
-  return (group[0].folder, [f.filename for f in group])
+  folder = group[0].folder
+  if not folder.startswith('n'):
+    folder = 'n' + folder
+  return (folder, [f.filename for f in group])
 
 def _read_metadata_as_bucket(metadata, image_root_folder):
   for group in grouper(metadata, max_bucket_size):
