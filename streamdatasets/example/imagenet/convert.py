@@ -34,7 +34,7 @@ print(in_dir_kaggle, item_label_file)
 def _read_item_label_file(file):
   with open(file, 'r') as f:
     lines = [l.split(',') for l in f.readlines()]
-  print(lines[0])
+  print(lines[0], lines[0][1].strip())
 
 def _read_csv_solution_file(file):
   with open(file, 'r') as f:
