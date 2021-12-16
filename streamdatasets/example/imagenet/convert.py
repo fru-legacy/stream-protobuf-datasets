@@ -1,9 +1,10 @@
 import csv
 from os import listdir
 from os.path import isfile, isdir, join
+from typing import List
 from bs4 import BeautifulSoup
 
-from .model import Imagenet
+from .model import Imagenet, Imagenet_Object
 from ...generator import Generator
 from ...helper import grouper
 
@@ -37,15 +38,24 @@ def _read_item_label_file(file):
     lines = [l.split(',') for l in f.readlines()]
   print(lines[0][0], lines[0][1].strip())
 
-def _read_csv_solution_file(file):
+def _read_csv_solution_file(file) -> List[Imagenet]:
   with open(file, 'r') as f:
     lines = [l.split(',') for l in f.readlines()]
-  del lines[0]
-  print(lines[0][0], list(grouper(lines[0][1].split(), 4)))
+  def line_to_ImageNet(line):
+    boxes = grouper(line[1].split(), 5)
+    net = Imagenet()
+    net.filename = line[0]
+    net.objects = [Imagenet_Object(b[0], int(b[1]), int(b[2]), int(b[3]), int(b[4])) for b in boxes]
+    return net
+  return map(line_to_ImageNet, lines[1:])
+
+  print(lines[0][0], list())
 
 
 _read_item_label_file(item_label_file)
-_read_csv_solution_file(test_file)
+nets = _read_csv_solution_file(test_file)
+
+print(nets[0:5])
 
 exit()
 

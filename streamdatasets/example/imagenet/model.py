@@ -2,6 +2,7 @@
 # sources: model.proto
 # plugin: python-betterproto
 from dataclasses import dataclass
+from typing import List
 
 import betterproto
 
@@ -12,10 +13,16 @@ class Imagenet(betterproto.Message):
     filename: str = betterproto.string_field(2)
     size_width: int = betterproto.int32_field(4)
     size_height: int = betterproto.int32_field(5)
-    object_name: str = betterproto.string_field(8)
-    # bool object_pose_unspecified = 9;bool object_truncated = 10;bool
-    # object_difficult = 11;
-    object_bndbox_xmin: int = betterproto.int32_field(12)
-    object_bndbox_ymin: int = betterproto.int32_field(13)
-    object_bndbox_xmax: int = betterproto.int32_field(14)
-    object_bndbox_ymax: int = betterproto.int32_field(15)
+    # int32 size_depth = 6;bool segmented = 7;
+    objects: List["Imagenet_Object"] = betterproto.message_field(8)
+
+
+@dataclass
+class Imagenet_Object(betterproto.Message):
+    name: str = betterproto.string_field(1)
+    # bool object_pose_unspecified = 2;bool object_truncated = 3;bool
+    # object_difficult = 4;
+    bndbox_xmin: int = betterproto.int32_field(5)
+    bndbox_ymin: int = betterproto.int32_field(6)
+    bndbox_xmax: int = betterproto.int32_field(7)
+    bndbox_ymax: int = betterproto.int32_field(8)
