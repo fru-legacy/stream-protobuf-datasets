@@ -48,11 +48,15 @@ class Generator():
     data_bytes = bytes(data)
     self.__add_bucket(len(data_bytes))
     self.file_data.write(data_bytes)
+    self.file_data.flush()
 
   def add_key_value(self, key: str, value: str):
     self.list.lookup.append(StreamDatasetKeyValue(key, value))
 
   def save_list(self):
-    self.file_list.write(bytes(self.list))
-    self.file_list.close()
     self.file_data.close()
+    print('Data done!')
+    raw_list = bytes(self.list)
+    print(f'List serialized {len(raw_list)}')
+    self.file_list.write(raw_list)
+    self.file_list.close()
