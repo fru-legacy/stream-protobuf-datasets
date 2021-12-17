@@ -14,7 +14,6 @@ class Generator():
     self.file_list = open(join(out_path, 'list.proto.bin'), 'wb')
     self.current_position = 0
     self.item_current = None
-    self.item_dict = dict()
 
   def __add_bucket(self, length: int):
     bucket = StreamDatasetBucket()
@@ -27,12 +26,9 @@ class Generator():
     item = StreamDatasetItem()
     item.name = name
     item.description = description
-    self.list.items.append(item)
+    if self.item_current is not None:
+      self.list.items.append(bytes(self.item_current))
     self.item_current = item
-    self.item_dict[name] = item
-
-  def set_current_item(self, name: str):
-    self.item_current = self.item_dict[name]
 
   def append_bucket(self, path: str, files: List[str], extension: str, metadata: List[Any]):
     data = StreamDatasetData()
@@ -55,6 +51,8 @@ class Generator():
 
   def save_list(self):
     #self.file_data.close()
+    self.list.items.append(bytes(self.item_current))
+    self.item_current = None
     print('Data done!')
     print(len(self.list.items))
     raw_list = bytes(self.list)

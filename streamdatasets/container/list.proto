@@ -16,7 +16,7 @@ message StreamDatasetItem {
 
 message StreamDatasetList {
   repeated StreamDatasetKeyValue lookup = 1;
-  repeated StreamDatasetItem items = 2;
+  repeated bytes items = 2;
 }
 
 message StreamDatasetKeyValue {

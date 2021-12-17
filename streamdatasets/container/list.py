@@ -23,7 +23,7 @@ class StreamDatasetItem(betterproto.Message):
 @dataclass
 class StreamDatasetList(betterproto.Message):
     lookup: List["StreamDatasetKeyValue"] = betterproto.message_field(1)
-    items: List["StreamDatasetItem"] = betterproto.message_field(2)
+    items: List[bytes] = betterproto.bytes_field(2)
 
 
 @dataclass

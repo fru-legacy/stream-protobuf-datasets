@@ -13,7 +13,7 @@ out_dir = '/data/streamable'
 in_dir = '/data/ILSVRC'
 in_dir_kaggle = '/data'
 
-max_bucket_size = 10
+max_bucket_size = 25
 generator = Generator(out_dir)
 folder_img = join(in_dir, 'Data/CLS-LOC')
 
