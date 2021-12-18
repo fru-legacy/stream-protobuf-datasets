@@ -10,7 +10,7 @@ class Generator():
     Path(out_path).mkdir(parents=True, exist_ok=True)
     self.out_path = out_path
     self.list = StreamDatasetList()
-    #self.file_data = open(join(out_path, 'data.proto.bin'), 'wb')
+    self.file_data = open(join(out_path, 'data.proto.bin'), 'wb')
     self.file_list = open(join(out_path, 'list.proto.bin'), 'wb')
     self.current_position = 0
     self.item_current = None
@@ -43,14 +43,14 @@ class Generator():
       data.metadata[-1].data = bytes(meta)
     data_bytes = bytes(data)
     self.__add_bucket(len(data_bytes))
-    #self.file_data.write(data_bytes)
-    #self.file_data.flush()
+    self.file_data.write(data_bytes)
+    self.file_data.flush()
 
   def add_key_value(self, key: str, value: str):
     self.list.lookup.append(StreamDatasetKeyValue(key, value))
 
   def save_list(self):
-    #self.file_data.close()
+    self.file_data.close()
     self.list.items.append(bytes(self.item_current))
     self.item_current = None
     print('Data done!')
