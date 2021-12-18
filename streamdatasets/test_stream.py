@@ -16,3 +16,6 @@ with open('/data/streamable3/data.proto.bin', 'rb') as f:
 data = StreamDatasetData().parse(data_data)
 print(data.metadata)
 print([f.name for f in data.files])
+
+with open('/data/test123.JPEG', 'wb') as f:
+  f.write(data.files[0].data)
