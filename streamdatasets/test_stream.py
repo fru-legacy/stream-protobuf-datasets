@@ -7,6 +7,7 @@ list = StreamDatasetList().parse(list_data)
 print(len(list.lookup))
 print(len(list.items))
 item = StreamDatasetItem().parse(list.items[10])
+print(item.name)
 print(len(item.buckets))
 bucket = item.buckets[1]
 
