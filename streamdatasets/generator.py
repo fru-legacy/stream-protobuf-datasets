@@ -1,5 +1,6 @@
 from typing import Any, List
 from os.path import join
+from os import fsync
 from pathlib import Path
 
 from .container.data import StreamDatasetData, StreamDatasetFile, StreamDatasetMetadata
@@ -43,6 +44,8 @@ class Generator():
     self.__add_bucket(len(data_bytes))
     with open(join(self.out_path, 'data.proto.bin'), 'ab') as f:
       f.write(data_bytes)
+      f.flush()
+      fsync(f.fileno())
 
   def add_key_value(self, key: str, value: str):
     self.list.lookup.append(StreamDatasetKeyValue(key, value))
