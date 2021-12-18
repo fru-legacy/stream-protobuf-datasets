@@ -49,6 +49,7 @@ def _get_path_and_files(group: List[Imagenet], clean_foldername):
 
 def _read_metadata_as_bucket(metadata, image_root_folder, clean_foldername):
   for group in grouper(metadata, max_bucket_size):
+    print(f'Bucket: {image_root_folder}')
     group = [g for g in group if g is not None]
     sub_folder, files = _get_path_and_files(group, clean_foldername)
     image_folder = join(image_root_folder, sub_folder)
@@ -78,16 +79,15 @@ train_folder_img = join(in_dir, 'Data/CLS-LOC/train') # ./n02606052/n02606052_18
 
 clean_train_foldername = lambda f: f if f.startswith('n') else 'n' + f
 for idx, f in enumerate(listdir(train_folder)):
-    print(f'Train: {idx}')
     if isdir(join(train_folder, f)):
       generator.start_item('train/' + f)
-      _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img, clean_train_foldername)
+      #_read_xml_dir_as_buckets(join(train_folder, f), train_folder_img, clean_train_foldername)
 
 # Var
 
 generator.start_item('val')
 val_folder = join(in_dir, 'Annotations/CLS-LOC/val') # ./ILSVRC2012_val_00024102.xml
-_read_xml_dir_as_buckets(val_folder, folder_img)
+#_read_xml_dir_as_buckets(val_folder, folder_img)
 
 # Test
 
