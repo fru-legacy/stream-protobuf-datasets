@@ -51,7 +51,7 @@ def _read_metadata_as_bucket(metadata, image_root_folder, clean_foldername):
   for group in grouper(metadata, max_bucket_size):
     group = [g for g in group if g is not None]
     sub_folder, files = _get_path_and_files(group, clean_foldername)
-    print(f'Bucket: {sub_folder}')
+    print(f'Bucket: {sub_folder} {generator.get_bucket_count()}')
     image_folder = join(image_root_folder, sub_folder)
     generator.append_bucket(image_folder, files, '.JPEG', group)
 

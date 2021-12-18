@@ -29,6 +29,9 @@ class Generator():
       self.list.items.append(bytes(self.item_current))
     self.item_current = item
 
+  def get_bucket_count(self):
+    return len(self.item_current.buckets)
+
   def append_bucket(self, path: str, files: List[str], extension: str, metadata: List[Any]):
     data = StreamDatasetData()
     for file in files:
