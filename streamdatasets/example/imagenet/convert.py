@@ -1,3 +1,4 @@
+import io
 from os import listdir
 from os.path import isfile, isdir, join
 from typing import List
@@ -9,7 +10,7 @@ from ...helper import grouper
 
 ## Configure paths
 
-out_dir = '/data/streamable2'
+out_dir = '/data/streamable3'
 in_dir = '/data/ILSVRC'
 in_dir_kaggle = '/data'
 
