@@ -81,13 +81,13 @@ clean_train_foldername = lambda f: f if f.startswith('n') else 'n' + f
 for idx, f in enumerate(listdir(train_folder)):
     if isdir(join(train_folder, f)):
       generator.start_item('train/' + f)
-      #_read_xml_dir_as_buckets(join(train_folder, f), train_folder_img, clean_train_foldername)
+      _read_xml_dir_as_buckets(join(train_folder, f), train_folder_img, clean_train_foldername)
 
 # Var
 
 generator.start_item('val')
 val_folder = join(in_dir, 'Annotations/CLS-LOC/val') # ./ILSVRC2012_val_00024102.xml
-#_read_xml_dir_as_buckets(val_folder, folder_img)
+_read_xml_dir_as_buckets(val_folder, folder_img)
 
 # Test
 
