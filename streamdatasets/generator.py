@@ -25,9 +25,8 @@ class Generator():
     item = StreamDatasetItem()
     item.name = name
     item.description = description
-    if self.item_current is not None:
-      self.list.items.append(bytes(self.item_current))
     self.item_current = item
+    self.list.items.append(item)
 
   def get_bucket_count(self):
     return len(self.item_current.buckets)
@@ -54,8 +53,6 @@ class Generator():
     self.list.lookup.append(StreamDatasetKeyValue(key, value))
 
   def save_list(self):
-    self.list.items.append(bytes(self.item_current))
-    self.item_current = None
     print('Data done!')
     print(len(self.list.items))
     raw_list = bytes(self.list)

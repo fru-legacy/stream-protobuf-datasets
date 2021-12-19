@@ -9,7 +9,7 @@ from ...helper import grouper
 
 ## Configure paths
 
-out_dir = '/data/streamable3'
+out_dir = '/data/streamable4'
 in_dir = '/data/ILSVRC'
 in_dir_kaggle = '/data'
 
